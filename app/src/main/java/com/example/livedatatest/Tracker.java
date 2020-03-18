@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.PermissionChecker;
 import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -25,14 +26,13 @@ public class Tracker implements ActivityCompat.OnRequestPermissionsResultCallbac
     private FusedLocationProviderClient fusedLocationClient;
     private final Context mContext;
     public double latitude;
+    LocationData locData;
 
 
 
-    public Tracker(Context context){
+    public Tracker(Context context, LocationData myLocation){
         this.mContext = context;
-
-
-
+        this.locData = myLocation;
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(mContext);
         getLocation();
     }
@@ -62,6 +62,7 @@ public class Tracker implements ActivityCompat.OnRequestPermissionsResultCallbac
                             // Logic to handle location object
                             Log.e("LAST LOCATION: ", location.toString());
                             latitude = location.getLatitude();
+                            locData.setLocation(Double.toString(latitude));
                         }
                     }
                 });

@@ -20,20 +20,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Tracker gpsTracker = new Tracker(this);
 
         myLocation = ViewModelProviders.of(this).get(LocationData.class);
+        Tracker gpsTracker = new Tracker(this, myLocation);
+
 
         //trackerLat = String.valueOf(gpsTracker.latitude);
         LiveData<String> foundLatitude = myLocation.getFoundLatitude(gpsTracker);
-
-        String latitude = foundLatitude.getValue();
-        if(latitude != null)
-        {
-            TextView tv = findViewById(R.id.textTitle);
-            tv.setText(latitude);
-        }
-
 
         foundLatitude.observe(this, new Observer<String>() {
             @Override
@@ -44,8 +37,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-
-
+        String latitude = foundLatitude.getValue();
+        if(latitude != null)
+        {
+            TextView tv = findViewById(R.id.textTitle);
+            tv.setText(latitude);
+        }
     }
 }

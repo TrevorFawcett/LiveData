@@ -12,7 +12,19 @@ public class LocationData extends ViewModel {
     private Tracker mTracker;
 
     public LocationData(){
+        foundLatitude = new MutableLiveData<String>();
+    }
 
+    public void setLocation(String location) {
+        if(!location.isEmpty())
+        {
+            String latitude = "" + mTracker.latitude;
+            foundLatitude.setValue(latitude);
+        }
+        else
+        {
+            foundLatitude.setValue("Failure");
+        }
     }
 
     public MutableLiveData<String> getFoundLatitude(Tracker tracker ) {
@@ -28,17 +40,8 @@ public class LocationData extends ViewModel {
         return foundLatitude;
     }
 
-    public void getLatitude(Tracker mTracker)
+    public MutableLiveData<String> getLatitude(Tracker mTracker)
     {
-        if(mTracker.latitude != 0)
-        {
-            String latitude = "" + mTracker.latitude;
-
-            foundLatitude.setValue(latitude);
-        }
-        else
-            {
-                foundLatitude.setValue("Failure");
-            }
+        return foundLatitude;
     }
 }
