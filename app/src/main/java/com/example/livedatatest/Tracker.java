@@ -7,12 +7,14 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Build;
 import android.util.Log;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.PermissionChecker;
 import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -20,12 +22,15 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
+import org.w3c.dom.Text;
+
 import static androidx.core.content.ContextCompat.checkSelfPermission;
 
 public class Tracker implements ActivityCompat.OnRequestPermissionsResultCallback{
     private FusedLocationProviderClient fusedLocationClient;
     private final Context mContext;
-    public double latitude;
+
+    public String locationCords;
     LocationData locData;
 
 
@@ -41,14 +46,14 @@ public class Tracker implements ActivityCompat.OnRequestPermissionsResultCallbac
     {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ActivityCompat.checkSelfPermission(mContext,Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mContext,Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    Activity#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for Activity#requestPermissions for more details.
-//                    Toast.makeText(MainActivity.this, "Permission not granted, Kindly allow permission", Toast.LENGTH_LONG).show();
+                /*
+                 here to request the missing permissions, and then overriding
+                   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                                                          int[] grantResults)
+                 to handle the case where the user grants the permission. See the documentation
+                 for Activity#requestPermissions for more details.
+                                    Toast.makeText(MainActivity.this, "Permission not granted, Kindly allow permission", Toast.LENGTH_LONG).show();
+                */
                 showPermissionAlert();
                 return;
             }
@@ -61,8 +66,13 @@ public class Tracker implements ActivityCompat.OnRequestPermissionsResultCallbac
                         if (location != null) {
                             // Logic to handle location object
                             Log.e("LAST LOCATION: ", location.toString());
-                            latitude = location.getLatitude();
-                            locData.setLocation(Double.toString(latitude));
+                            Double latitude = location.getLatitude();
+                            Double longitude = location.getLongitude();
+                            locationCords = "" + latitude + ", " + longitude;
+                            locData.setLocation(locationCords);
+                        }
+                        else{
+                            locData.setLocation("location not found");
                         }
                     }
                 });

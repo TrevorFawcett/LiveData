@@ -8,40 +8,62 @@ import androidx.lifecycle.ViewModel;
 
 public class LocationData extends ViewModel {
 
-    private MutableLiveData<String> foundLatitude;
+    private MutableLiveData<String> foundLocation;
     private Tracker mTracker;
 
     public LocationData(){
-        foundLatitude = new MutableLiveData<String>();
+        foundLocation = new MutableLiveData<String>();
     }
 
     public void setLocation(String location) {
+        /*
         if(!location.isEmpty())
         {
-            String latitude = "" + mTracker.latitude;
-            foundLatitude.setValue(latitude);
+            String latitude = "" + mTracker.locationCords;
+            foundLocation.setValue(latitude);
         }
         else
         {
-            foundLatitude.setValue("Failure");
+            foundLocation.setValue("Failure");
         }
+
+         */
+
+        if(!location.isEmpty())
+        {
+            String x;
+            if(mTracker.locationCords == null)
+            {
+                x = location;
+            }
+            else
+                {
+                    x = mTracker.locationCords;
+                }
+           
+            foundLocation.setValue(x);
+        }
+
     }
 
-    public MutableLiveData<String> getFoundLatitude(Tracker tracker ) {
+    public MutableLiveData<String> getFoundLocation(Tracker tracker ) {
 
         mTracker = tracker;
-        if(foundLatitude == null)
+        /*
+        if(foundLocation == null)
         {
-            foundLatitude = new MutableLiveData<String>();
+            foundLocation = new MutableLiveData<String>();
 
         }
-        getLatitude(mTracker);
 
-        return foundLatitude;
+         */
+        getLocation(mTracker);
+
+        return foundLocation;
     }
 
-    public MutableLiveData<String> getLatitude(Tracker mTracker)
+    public MutableLiveData<String> getLocation(Tracker mTracker)
     {
-        return foundLatitude;
+        return foundLocation;
     }
 }
