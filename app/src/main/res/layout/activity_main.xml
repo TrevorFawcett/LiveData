@@ -8,24 +8,26 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/textTitle"
+        android:id="@+id/userLoc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="Hello World!" />
 
-    <TextView
-        android:id="@+id/geoLocation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="TextView" />
-
     <EditText
+        android:id="@+id/inputStreet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Enter destination postal code"
+        android:hint="Enter Street Adress ex. 123 Fake St"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/inputCity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Enter City"
         android:inputType="textPersonName" />
 
     <Button

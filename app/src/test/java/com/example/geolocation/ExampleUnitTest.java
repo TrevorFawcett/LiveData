@@ -1,4 +1,4 @@
-package com.example.livedatatest;
+package com.example.geolocation;
 
 import org.junit.Test;
 

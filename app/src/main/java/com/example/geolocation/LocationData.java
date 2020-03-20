@@ -1,4 +1,4 @@
-package com.example.livedatatest;
+package com.example.geolocation;
 
 import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;
@@ -37,10 +37,10 @@ public class LocationData extends ViewModel {
                 x = location;
             }
             else
-                {
-                    x = mTracker.locationCords;
-                }
-           
+            {
+                x = mTracker.locationCords;
+            }
+
             foundLocation.setValue(x);
         }
 
